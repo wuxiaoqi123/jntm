@@ -17,7 +17,7 @@ class AppViewModel : BaseViewModel() {
 
     init {
         userInfo.value = CacheUtil.getUser()
-        appColor.value = SettingUtil.getColor()
+//        appColor.value = SettingUtil.getColor()
 
     }
 }
