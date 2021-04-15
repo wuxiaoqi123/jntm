@@ -1,5 +1,6 @@
 package com.example.jntm.app.event
 
+import com.example.jetpackmvvm.base.appContext
 import com.example.jetpackmvvm.base.viewmodel.BaseViewModel
 import com.example.jetpackmvvm.callback.livedata.event.EventLiveData
 import com.example.jntm.app.util.CacheUtil
@@ -17,7 +18,7 @@ class AppViewModel : BaseViewModel() {
 
     init {
         userInfo.value = CacheUtil.getUser()
-//        appColor.value = SettingUtil.getColor()
-
+        appColor.value = SettingUtil.getColor(appContext)
+        appAnimation.value = SettingUtil.getListMode()
     }
 }
