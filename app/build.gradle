@@ -75,4 +75,7 @@ dependencies {
     //Bugly
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.5'
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+
+    //防崩溃
+    implementation 'cat.ereza:customactivityoncrash:2.3.0'
 }

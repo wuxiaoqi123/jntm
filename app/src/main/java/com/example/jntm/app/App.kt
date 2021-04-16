@@ -2,6 +2,7 @@ package com.example.jntm.app
 
 import android.content.Context
 import androidx.multidex.MultiDex
+import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.example.jetpackmvvm.base.BaseApp
 import com.example.jetpackmvvm.ext.util.jetpackMvvmLog
 import com.example.jntm.BuildConfig
@@ -50,5 +51,16 @@ class App : BaseApp() {
         strategy.isUploadProcess = processName == null || processName == packageName
         Bugly.init(context, if (BuildConfig.DEBUG) "xxx" else "a52f2b5ebb", BuildConfig.DEBUG)
         jetpackMvvmLog = BuildConfig.DEBUG
+
+        CaocConfig.Builder.create()
+            .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT)
+            .enabled(true)
+            .showErrorDetails(false)
+            .showRestartButton(false)
+            .logErrorOnRestart(false)
+            .trackActivities(true)
+            .minTimeBetweenCrashesMs(2000)
+//            .restartActivity(Welco)
+            .apply()
     }
 }

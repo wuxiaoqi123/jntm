@@ -3,5 +3,11 @@
     package="com.example.jetpackmvvm">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application>
+        <provider
+            android:name=".base.Ktx"
+            android:authorities="${applicationId}.KtxInstaller"
+            android:exported="false" />
+    </application>
 
 </manifest>
