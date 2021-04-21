@@ -7,6 +7,9 @@ import android.content.IntentFilter
 import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.ProcessLifecycleOwner
+import com.example.jetpackmvvm.ext.lifecycle.KtxAppLifeObserver
 import com.example.jetpackmvvm.ext.lifecycle.KtxLifeCycleCallBack
 import com.example.jetpackmvvm.network.manager.NetworkStateReceive
 
@@ -24,7 +27,7 @@ class Ktx : ContentProvider() {
     override fun onCreate(): Boolean {
         val application = context!!.applicationContext as Application
         install(application)
-        return true;
+        return true
     }
 
     private fun install(application: Application) {
@@ -35,6 +38,7 @@ class Ktx : ContentProvider() {
             IntentFilter(ConnectivityManager.EXTRA_NO_CONNECTIVITY)
         )
         if (watchActivityLife) application.registerActivityLifecycleCallbacks(KtxLifeCycleCallBack())
+        if (watchAppLife) ProcessLifecycleOwner.get().lifecycle.addObserver(KtxAppLifeObserver)
     }
 
     override fun query(
@@ -43,28 +47,18 @@ class Ktx : ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor? {
-        TODO("Not yet implemented")
-    }
+    ): Cursor? = null
 
-    override fun getType(uri: Uri): String? {
-        TODO("Not yet implemented")
-    }
+    override fun getType(uri: Uri): String? = null
 
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Not yet implemented")
-    }
+    override fun insert(uri: Uri, values: ContentValues?): Uri? = null
 
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        TODO("Not yet implemented")
-    }
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int = 0
 
     override fun update(
         uri: Uri,
         values: ContentValues?,
         selection: String?,
         selectionArgs: Array<out String>?
-    ): Int {
-        TODO("Not yet implemented")
-    }
+    ): Int = 0
 }

@@ -11,6 +11,7 @@ import com.example.jntm.app.event.EventViewModel
 import com.example.jntm.app.weight.loadCallBack.EmptyCallback
 import com.example.jntm.app.weight.loadCallBack.ErrorCallback
 import com.example.jntm.app.weight.loadCallBack.LoadingCallback
+import com.example.jntm.ui.activity.WelcomeActivity
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
 import com.tencent.bugly.Bugly
@@ -33,7 +34,7 @@ class App : BaseApp() {
     override fun onCreate() {
         super.onCreate()
         MMKV.initialize(this.filesDir.absolutePath + "/mmkv")
-        instance = this@App
+        instance = this
         eventViewModelInstance = getAppViewModelProvider().get(EventViewModel::class.java)
         appViewModelInstance = getAppViewModelProvider().get(AppViewModel::class.java)
 
@@ -60,7 +61,7 @@ class App : BaseApp() {
             .logErrorOnRestart(false)
             .trackActivities(true)
             .minTimeBetweenCrashesMs(2000)
-//            .restartActivity(Welco)
+            .restartActivity(WelcomeActivity::class.java)
             .apply()
     }
 }
