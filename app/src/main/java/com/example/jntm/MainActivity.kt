@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.jntm.app.base.BaseActivity
 import com.example.jntm.databinding.ActivityMainBinding
 import com.example.jntm.viewmodel.state.MainViewModel
+import com.tencent.bugly.beta.Beta
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
@@ -18,6 +19,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun layoutId() = R.layout.activity_main
 
     override fun initView(saveInstanceState: Bundle?) {
-
+        Beta.checkUpgrade(false, false)
     }
 }
