@@ -1,11 +1,23 @@
 package com.example.jntm
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import com.example.jntm.app.base.BaseActivity
+import com.example.jntm.databinding.ActivityMainBinding
+import com.example.jntm.viewmodel.state.MainViewModel
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
+        }
+    }
+
+    override fun layoutId() = R.layout.activity_main
+
+    override fun initView(saveInstanceState: Bundle?) {
+
     }
 }

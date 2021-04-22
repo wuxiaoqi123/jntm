@@ -33,6 +33,7 @@ class App : BaseApp() {
 
     override fun onCreate() {
         super.onCreate()
+        if (!isMainProcess()) return
         MMKV.initialize(this.filesDir.absolutePath + "/mmkv")
         instance = this
         eventViewModelInstance = getAppViewModelProvider().get(EventViewModel::class.java)
@@ -55,7 +56,7 @@ class App : BaseApp() {
 
         CaocConfig.Builder.create()
             .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT)
-            .enabled(true)
+            .enabled(false)
             .showErrorDetails(false)
             .showRestartButton(false)
             .logErrorOnRestart(false)

@@ -53,7 +53,7 @@ class WelcomeActivity : BaseActivity<BaseViewModel, ActivityWelcomeBinding>() {
         } else {
             welcome_image.visible()
             mViewPager.postDelayed({
-                startActivity(Intent(this, MainActivity::class.java))
+                MainActivity.start(this@WelcomeActivity)
                 finish()
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             }, 300)
@@ -63,7 +63,7 @@ class WelcomeActivity : BaseActivity<BaseViewModel, ActivityWelcomeBinding>() {
     inner class ProxyClick {
         fun toMain() {
             CacheUtil.setFirst(false)
-            startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
+            MainActivity.start(this@WelcomeActivity)
             finish()
             //带点渐变动画
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
