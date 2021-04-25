@@ -18,6 +18,10 @@ import com.tencent.bugly.Bugly
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 
+val appViewModel: AppViewModel by lazy { App.appViewModelInstance }
+
+val eventViewModel: EventViewModel by lazy { App.eventViewModelInstance }
+
 class App : BaseApp() {
 
     companion object {
