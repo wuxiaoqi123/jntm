@@ -2,6 +2,7 @@ package com.example.jntm.ui.fragment
 
 import android.os.Bundle
 import com.example.jntm.R
+import com.example.jntm.app.appViewModel
 import com.example.jntm.app.base.BaseFragment
 import com.example.jntm.app.ext.init
 import com.example.jntm.app.ext.initMain
@@ -24,5 +25,11 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                 R.id.menu_me -> mainViewPager.setCurrentItem(4, false)
             }
         }
+    }
+
+    override fun createObserver() {
+        appViewModel.appColor.observeInFragment(this, {
+            //TODO
+        })
     }
 }
