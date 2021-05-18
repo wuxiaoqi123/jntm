@@ -1,6 +1,8 @@
 package com.example.jntm.app.ext
 
 import android.app.Activity
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -54,4 +56,14 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
 
     }
     return this
+}
+
+fun BottomNavigationViewEx.interceptLongClick(vararg ids: Int) {
+    val bottomNavigationMenuView: ViewGroup = (this.getChildAt(0) as ViewGroup)
+    for (index in ids.indices) {
+        bottomNavigationMenuView.getChildAt(index).findViewById<View>(ids[index])
+            .setOnLongClickListener {
+                true
+            }
+    }
 }

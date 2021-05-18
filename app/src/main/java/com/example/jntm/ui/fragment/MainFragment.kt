@@ -6,6 +6,7 @@ import com.example.jntm.app.appViewModel
 import com.example.jntm.app.base.BaseFragment
 import com.example.jntm.app.ext.init
 import com.example.jntm.app.ext.initMain
+import com.example.jntm.app.ext.interceptLongClick
 import com.example.jntm.databinding.FragmentMainBinding
 import com.example.jntm.viewmodel.state.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -25,6 +26,13 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                 R.id.menu_me -> mainViewPager.setCurrentItem(4, false)
             }
         }
+        mainBottom.interceptLongClick(
+            R.id.menu_main,
+            R.id.menu_project,
+            R.id.menu_system,
+            R.id.menu_public,
+            R.id.menu_me
+        )
     }
 
     override fun createObserver() {

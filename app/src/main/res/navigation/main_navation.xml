@@ -8,4 +8,6 @@
         android:id="@+id/mainfragment"
         android:name="com.example.jntm.ui.fragment.MainFragment"
         android:label="HomeFragment" />
+
+    <action android:id="@+id/action_to_loginFragment" />
 </navigation>
