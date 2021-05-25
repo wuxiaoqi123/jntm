@@ -3,12 +3,18 @@ package com.example.jntm.ui.fragment.login
 import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
+import com.example.jetpackmvvm.ext.nav
 import com.example.jntm.R
+import com.example.jntm.app.appViewModel
 import com.example.jntm.app.base.BaseFragment
+import com.example.jntm.app.ext.initClose
 import com.example.jntm.app.ext.showMessage
+import com.example.jntm.app.util.SettingUtil
 import com.example.jntm.databinding.FragmentLoginBinding
 import com.example.jntm.viewmodel.request.RequestLoginRegisterViewModel
 import com.example.jntm.viewmodel.state.LoginRegisterViewModel
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>() {
 
@@ -17,6 +23,16 @@ class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>
     override fun layoutId(): Int = R.layout.fragment_login
 
     override fun initView(savedInstanceState: Bundle?) {
+        mDatabind.viewmodel = mViewModel
+        mDatabind.click = ProxyClick()
+        toolbar.initClose("登录") {
+            nav().navigateUp()
+        }
+        appViewModel.appColor.value?.let {
+            SettingUtil.setShapColor(loginSub, it)
+            loginGoregister.setTextColor(it)
+            toolbar.setBackgroundColor(it)
+        }
     }
 
     inner class ProxyClick {

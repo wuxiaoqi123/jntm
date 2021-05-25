@@ -4,10 +4,13 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.jetpackmvvm.base.appContext
+import com.example.jetpackmvvm.ext.util.toHtml
+import com.example.jntm.R
 import com.example.jntm.app.util.SettingUtil
 import com.example.jntm.ui.fragment.home.HomeFragment
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
@@ -66,4 +69,16 @@ fun BottomNavigationViewEx.interceptLongClick(vararg ids: Int) {
                 true
             }
     }
+}
+
+fun Toolbar.initClose(
+    titleStr: String = "",
+    backImg: Int = R.drawable.ic_back,
+    onBack: (toolbar: Toolbar) -> Unit
+): Toolbar {
+    setBackgroundColor(SettingUtil.getColor(appContext))
+    title = titleStr.toHtml()
+    setNavigationIcon(backImg)
+    setNavigationOnClickListener { onBack.invoke(this) }
+    return this
 }
