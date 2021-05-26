@@ -35,6 +35,10 @@ class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>
         }
     }
 
+    override fun createObserver() {
+//        requestLoginRegisterViewModel.
+    }
+
     inner class ProxyClick {
 
         fun clear() {
