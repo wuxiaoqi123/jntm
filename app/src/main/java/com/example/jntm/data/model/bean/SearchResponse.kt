@@ -1,0 +1,13 @@
+package com.example.jntm.data.model.bean
+
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class SearchResponse(
+    var id: Int,
+    var link: String,
+    var name: String,
+    var order: Int,
+    var visible: Int
+) : Parcelable
