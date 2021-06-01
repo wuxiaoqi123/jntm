@@ -1,4 +1,4 @@
-package com.example.jntm.app.network
+package com.example.jntm.data.model.bean
 
 import com.example.jetpackmvvm.network.BaseResponse
 
