@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
 import com.example.jetpackmvvm.ext.nav
+import com.example.jetpackmvvm.ext.parseState
 import com.example.jntm.R
 import com.example.jntm.app.appViewModel
 import com.example.jntm.app.base.BaseFragment
+import com.example.jntm.app.ext.hideSoftKeyboard
 import com.example.jntm.app.ext.initClose
 import com.example.jntm.app.ext.showMessage
+import com.example.jntm.app.util.CacheUtil
 import com.example.jntm.app.util.SettingUtil
 import com.example.jntm.databinding.FragmentLoginBinding
 import com.example.jntm.viewmodel.request.RequestLoginRegisterViewModel
@@ -36,7 +39,16 @@ class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>
     }
 
     override fun createObserver() {
-//        requestLoginRegisterViewModel.
+        requestLoginRegisterViewModel.loginResult.observe(viewLifecycleOwner, { resultState ->
+            parseState(resultState, {
+                CacheUtil.setUser(it)
+                CacheUtil.setIsLogin(true)
+                appViewModel.userInfo.value = it
+                nav().navigateUp()
+            }, {
+                showMessage(it.errorMsg)
+            })
+        })
     }
 
     inner class ProxyClick {
@@ -57,7 +69,8 @@ class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>
         }
 
         fun goRegister() {
-
+            hideSoftKeyboard(activity)
+//            nav().navigateAction()
         }
 
         var onCheckedChangeListener =

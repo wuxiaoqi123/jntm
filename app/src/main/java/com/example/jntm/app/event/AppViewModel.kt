@@ -1,6 +1,5 @@
 package com.example.jntm.app.event
 
-import android.util.Log
 import com.example.jetpackmvvm.base.appContext
 import com.example.jetpackmvvm.base.viewmodel.BaseViewModel
 import com.example.jetpackmvvm.callback.livedata.event.EventLiveData
