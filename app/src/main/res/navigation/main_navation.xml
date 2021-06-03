@@ -2,12 +2,45 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_navation"
-    app:startDestination="@+id/mainfragment">
+    app:startDestination="@+id/loginFragment">
 
     <fragment
         android:id="@+id/mainfragment"
         android:name="com.example.jntm.ui.fragment.MainFragment"
         android:label="HomeFragment" />
 
-    <action android:id="@+id/action_to_loginFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.jntm.ui.fragment.login.LoginFragment"
+        android:label="LoginFragment">
+        <action
+            android:id="@+id/action_loginFragment_to_registerFrgment"
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.jntm.ui.fragment.login.RegisterFragment"
+        android:label="RegisterFragment">
+
+        <action
+            android:id="@+id/action_registerFrgment_to_mainFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/mainfragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_to_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 </navigation>

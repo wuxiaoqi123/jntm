@@ -11,8 +11,6 @@ class AriticleAdapter(data: MutableList<AriticleResponse>?) :
     private val project = 2
     private var showTag = false
 
-    private var collectAction:(item:AriticleResponse,v:CollectView)
-
     override fun convert(holder: BaseViewHolder, item: AriticleResponse) {
 
     }
