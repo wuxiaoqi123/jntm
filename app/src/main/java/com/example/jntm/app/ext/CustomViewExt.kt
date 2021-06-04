@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackmvvm.base.appContext
 import com.example.jetpackmvvm.ext.util.toHtml
 import com.example.jntm.R
@@ -81,4 +82,13 @@ fun Toolbar.initClose(
     setNavigationIcon(backImg)
     setNavigationOnClickListener { onBack.invoke(this) }
     return this
+}
+
+fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int) {
+    if (mode == 0) {
+        this.animationEnable = false
+    } else {
+        this.animationEnable = true
+        this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[mode - 1])
+    }
 }
