@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class CollectUrlResponse(
     var icon: String,
+    var id: Int,
     var link: String,
     var name: String,
     var order: Int,
