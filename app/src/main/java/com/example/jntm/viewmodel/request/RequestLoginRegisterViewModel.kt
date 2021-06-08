@@ -6,7 +6,7 @@ import com.example.jetpackmvvm.ext.request
 import com.example.jetpackmvvm.state.ResultState
 import com.example.jntm.app.network.apiService
 import com.example.jntm.data.model.bean.UserInfo
-import com.example.jntm.data.repository.request.HttpReqeustCoroutine
+import com.example.jntm.data.repository.request.HttpRequestCoroutine
 
 class RequestLoginRegisterViewModel : BaseViewModel() {
 
@@ -23,7 +23,7 @@ class RequestLoginRegisterViewModel : BaseViewModel() {
 
     fun registerAndlogin(username: String, password: String) {
         request({
-            HttpReqeustCoroutine.register(username, password)
+            HttpRequestCoroutine.register(username, password)
         }, loginResult, true, "正在注册中...")
     }
 }

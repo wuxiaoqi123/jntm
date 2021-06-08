@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -13,8 +15,14 @@ import com.example.jetpackmvvm.base.appContext
 import com.example.jetpackmvvm.ext.util.toHtml
 import com.example.jntm.R
 import com.example.jntm.app.util.SettingUtil
+import com.example.jntm.app.weight.loadCallBack.LoadingCallback
+import com.example.jntm.app.weight.recyclerview.DefineLoadMoreView
 import com.example.jntm.ui.fragment.home.HomeFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 fun hideSoftKeyboard(activity: Activity?) {
     activity?.let { act ->
@@ -90,5 +98,68 @@ fun BaseQuickAdapter<*, *>.setAdapterAnimation(mode: Int) {
     } else {
         this.animationEnable = true
         this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[mode - 1])
+    }
+}
+
+fun Toolbar.init(titleStr: String = ""): Toolbar {
+    setBackgroundColor(SettingUtil.getColor(appContext))
+    title = titleStr
+    return this
+}
+
+fun loadServiceInit(view: View, callback: () -> Unit): LoadService<Any> {
+    val loadsir = LoadSir.getDefault().register(view) {
+        callback.invoke()
+    }
+    loadsir.showSuccess()
+    SettingUtil.setLoadingColor(SettingUtil.getColor(appContext), loadsir)
+    return loadsir
+}
+
+fun LoadService<*>.showLoading() {
+    this.showCallback(LoadingCallback::class.java)
+}
+
+fun SwipeRecyclerView.init(
+    layoutManager: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>,
+    isScroll: Boolean = true
+): SwipeRecyclerView {
+    this.layoutManager = layoutManager
+    setHasFixedSize(true)
+    adapter = bindAdapter
+    isNestedScrollingEnabled = isScroll
+    return this
+}
+
+fun SwipeRecyclerView.initFooter(loadMoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
+    val footerView = DefineLoadMoreView(appContext)
+    footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
+    footerView.setLoadMoreListener({
+        footerView.onLoading()
+        loadMoreListener.onLoadMore()
+    })
+    addFooterView(footerView)
+    setLoadMoreView(footerView)
+    setLoadMoreListener(loadMoreListener)
+    return footerView
+}
+
+fun RecyclerView.initFloatBtn(floatbtn: FloatingActionButton) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (!canScrollVertically(-1)) {
+                floatbtn.visibility = View.INVISIBLE
+            }
+        }
+    })
+    floatbtn.backgroundTintList = SettingUtil.getOneColorStateList(appContext)
+    floatbtn.setOnClickListener {
+        val layoutManager = layoutManager as LinearLayoutManager
+        if (layoutManager.findLastVisibleItemPosition() >= 40) {
+            scrollToPosition(0)
+        } else {
+            smoothScrollToPosition(0)
+        }
     }
 }
