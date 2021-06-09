@@ -15,7 +15,7 @@ data class CollectResponse(
     var link: String,
     var niceData: String,
     var origin: String,
-    var originId: String,
+    var originId: Int,
     var publishTime: Long,
     var title: String,
     var userId: Int,
