@@ -6,7 +6,12 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.example.jetpackmvvm.ext.view.textString
 
 object CustomBindAdapter {
@@ -39,5 +44,15 @@ object CustomBindAdapter {
                 clickListener.invoke()
             }
         }
+    }
+
+    @BindingAdapter(value = ["circleImageUrl"])
+    @JvmStatic
+    fun circleImageUrl(view: ImageView, url: String) {
+        Glide.with(view.context.applicationContext)
+            .load(url)
+            .apply(RequestOptions.bitmapTransform(CircleCrop()))
+            .transition(DrawableTransitionOptions.withCrossFade(500))
+            .into(view)
     }
 }

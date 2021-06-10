@@ -4,7 +4,11 @@ import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +19,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.jetpackmvvm.base.appContext
 import com.example.jetpackmvvm.ext.util.toHtml
 import com.example.jntm.R
+import com.example.jntm.app.network.statecallback.ListDataUiState
 import com.example.jntm.app.util.SettingUtil
+import com.example.jntm.app.weight.loadCallBack.EmptyCallback
+import com.example.jntm.app.weight.loadCallBack.ErrorCallback
 import com.example.jntm.app.weight.loadCallBack.LoadingCallback
 import com.example.jntm.app.weight.recyclerview.DefineLoadMoreView
 import com.example.jntm.ui.fragment.home.HomeFragment
@@ -171,5 +178,83 @@ fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
             onRefreshListener.invoke()
         }
         setColorSchemeColors(SettingUtil.getColor(appContext))
+    }
+}
+
+fun <T> loadListData(
+    data: ListDataUiState<T>,
+    baseQuickAdapter: BaseQuickAdapter<T, *>,
+    loadService: LoadService<*>,
+    recyclerView: SwipeRecyclerView,
+    swipeRefreshLayout: SwipeRefreshLayout
+) {
+    swipeRefreshLayout.isRefreshing = false
+    recyclerView.loadMoreFinish(data.isEmpty, data.hasMore)
+    if (data.isSuccess) {
+        //成功
+        when {
+            //第一页并没有数据 显示空布局界面
+            data.isFirstEmpty -> {
+                loadService.showEmpty()
+            }
+            //是第一页
+            data.isRefresh -> {
+                baseQuickAdapter.setList(data.listData)
+                loadService.showSuccess()
+            }
+            //不是第一页
+            else -> {
+                baseQuickAdapter.addData(data.listData)
+                loadService.showSuccess()
+            }
+        }
+    } else {
+        //失败
+        if (data.isRefresh) {
+            //如果是第一页，则显示错误界面，并提示错误信息
+            loadService.showError(data.errMessage)
+        } else {
+            recyclerView.loadMoreError(0, data.errMessage)
+        }
+    }
+}
+
+fun LoadService<*>.setErrorText(message: String) {
+    if (message.isNotEmpty()) {
+        this.setCallBack(ErrorCallback::class.java) { _, view ->
+            view.findViewById<TextView>(R.id.error_text).text = message
+        }
+    }
+}
+
+fun LoadService<*>.showError(message: String = "") {
+    this.setErrorText(message)
+    this.showCallback(ErrorCallback::class.java)
+}
+
+fun LoadService<*>.showEmpty() {
+    this.showCallback(EmptyCallback::class.java)
+}
+
+fun setUiTheme(color: Int, vararg anyList: Any?) {
+    anyList.forEach { view ->
+        view?.let {
+            when (it) {
+                is LoadService<*> -> SettingUtil.setLoadingColor(color, it as LoadService<Any>)
+                is FloatingActionButton -> it.backgroundTintList =
+                    SettingUtil.getOneColorStateList(color)
+                is SwipeRefreshLayout -> it.setColorSchemeColors(color)
+                is DefineLoadMoreView -> it.setLoadViewColor(SettingUtil.getOneColorStateList(color))
+                is BottomNavigationViewEx -> {
+                    it.itemIconTintList = SettingUtil.getColorStateList(color)
+                    it.itemTextColor = SettingUtil.getColorStateList(color)
+                }
+                is Toolbar -> it.setBackgroundColor(color)
+                is TextView -> it.setTextColor(color)
+                is LinearLayout -> it.setBackgroundColor(color)
+                is ConstraintLayout -> it.setBackgroundColor(color)
+                is FrameLayout -> it.setBackgroundColor(color)
+            }
+        }
     }
 }

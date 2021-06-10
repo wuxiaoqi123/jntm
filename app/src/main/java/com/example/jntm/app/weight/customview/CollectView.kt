@@ -5,6 +5,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.blankj.utilcode.util.VibrateUtils
+import com.example.jetpackmvvm.ext.nav
+import com.example.jetpackmvvm.ext.navigateAction
 import com.example.jntm.R
 import com.example.jntm.app.util.CacheUtil
 import per.goweii.reveallayout.RevealLayout
@@ -36,7 +38,7 @@ class CollectView @JvmOverloads constructor(
                     onCollectViewClickListener?.onClick(this)
                 } else {
                     isChecked = true
-//                    nav(v).navigateAction(R.id.action_)
+                    nav(v).navigateAction(R.id.action_to_loginFragment)
                 }
             }
         }
