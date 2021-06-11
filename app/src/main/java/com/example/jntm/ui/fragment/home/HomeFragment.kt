@@ -84,7 +84,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             setOnItemClickListener { adapter, view, position ->
                 nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
                     putParcelable(
-                        "articleData",
+                        "ariticleData",
                         articleAdapter.data[position - this@HomeFragment.recyclerView.headerCount]
                     )
                 })

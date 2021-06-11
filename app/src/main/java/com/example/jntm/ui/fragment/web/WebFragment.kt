@@ -40,6 +40,7 @@ class WebFragment : BaseFragment<WebViewModel, FragmentWebBinding>() {
     override fun layoutId(): Int = R.layout.fragment_web
 
     override fun initView(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         arguments?.run {
             //点击文章进来的
             getParcelable<AriticleResponse>("ariticleData")?.let {
