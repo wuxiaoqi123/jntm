@@ -1,8 +1,12 @@
 package com.example.jntm.app.ext
 
 import android.app.Activity
+import android.content.Context
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -25,6 +29,7 @@ import com.example.jntm.app.weight.loadCallBack.EmptyCallback
 import com.example.jntm.app.weight.loadCallBack.ErrorCallback
 import com.example.jntm.app.weight.loadCallBack.LoadingCallback
 import com.example.jntm.app.weight.recyclerview.DefineLoadMoreView
+import com.example.jntm.app.weight.viewpager.ScaleTransitionPagerTitleView
 import com.example.jntm.ui.fragment.home.HomeFragment
 import com.example.jntm.ui.fragment.project.ProjectFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,6 +37,13 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
+import net.lucode.hackware.magicindicator.MagicIndicator
+import net.lucode.hackware.magicindicator.buildins.UIUtil
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
 
 fun hideSoftKeyboard(activity: Activity?) {
     activity?.let { act ->
@@ -258,4 +270,82 @@ fun setUiTheme(color: Int, vararg anyList: Any?) {
             }
         }
     }
+}
+
+fun ViewPager2.init(
+    fragment: Fragment,
+    fragments: ArrayList<Fragment>,
+    isUserInputEnabled: Boolean = true
+): ViewPager2 {
+    this.isUserInputEnabled = isUserInputEnabled
+    adapter = object : FragmentStateAdapter(fragment) {
+
+        override fun getItemCount() = fragments.size
+
+        override fun createFragment(position: Int) = fragments[position]
+    }
+    return this
+}
+
+fun MagicIndicator.bindViewPager2(
+    viewPager: ViewPager2,
+    mStringList: List<String> = arrayListOf(),
+    action: (index: Int) -> Unit = {}
+) {
+    val commonNavigator = CommonNavigator(appContext)
+    commonNavigator.adapter = object : CommonNavigatorAdapter() {
+
+        override fun getCount() = mStringList.size
+
+        override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
+            return ScaleTransitionPagerTitleView(appContext).apply {
+                text = mStringList[index].toHtml()
+                textSize = 17f
+                normalColor = Color.WHITE
+                selectedColor = Color.WHITE
+                setOnClickListener {
+                    viewPager.currentItem = index
+                    action.invoke(index)
+                }
+            }
+        }
+
+        override fun getIndicator(context: Context?): IPagerIndicator {
+            return LinePagerIndicator(context).apply {
+                mode = LinePagerIndicator.MODE_EXACTLY
+                //线条的宽高度
+                lineHeight = UIUtil.dip2px(appContext, 3.0).toFloat()
+                lineWidth = UIUtil.dip2px(appContext, 30.0).toFloat()
+                //线条的圆角
+                roundRadius = UIUtil.dip2px(appContext, 6.0).toFloat()
+                startInterpolator = AccelerateInterpolator()
+                endInterpolator = DecelerateInterpolator(2.0f)
+                //线条的颜色
+                setColors(Color.WHITE)
+            }
+        }
+    }
+    this.navigator = commonNavigator
+
+    viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            this@bindViewPager2.onPageSelected(position)
+            action.invoke(position)
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            this@bindViewPager2.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            this@bindViewPager2.onPageScrollStateChanged(state)
+        }
+    })
 }

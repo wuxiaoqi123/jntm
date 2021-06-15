@@ -40,4 +40,16 @@ class HttpReqeustManager {
             throw AppException(registerData.errorCode, registerData.errorMsg)
         }
     }
+
+    suspend fun getProjectData(
+        pageNo: Int,
+        cid: Int = 0,
+        isNew: Boolean = false
+    ): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>> {
+        return if (isNew) {
+            apiService.getProjectNewData(pageNo)
+        } else {
+            apiService.getProjectDataByType(pageNo, cid)
+        }
+    }
 }
