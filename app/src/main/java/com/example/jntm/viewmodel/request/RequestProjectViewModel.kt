@@ -34,7 +34,7 @@ class RequestProjectViewModel : BaseViewModel() {
                     isRefresh = isRefresh,
                     isEmpty = it.isEmpty(),
                     hasMore = it.hasMore(),
-                    isFirstEmpty = isRefresh,
+                    isFirstEmpty = isRefresh && it.isEmpty(),
                     listData = it.datas
                 )
             projectDataState.value = listDataUiState

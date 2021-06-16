@@ -54,11 +54,10 @@ class ProjectFragment : BaseFragment<ProjectViewModel, FragmentViewpagerBinding>
                 fragments.clear()
                 mDataList.add("最新项目")
                 mDataList.addAll(it.map { it.name })
-                // TODO
-//                fragments.add(ProjectChildFragment.newInstance(0, true))
-//                it.forEach { classify ->
-//                    fragments.add(ProjectChildFragment.newInstance(classify.id, false))
-//                }
+                fragments.add(ProjectChildFragment.newInstance(0, true))
+                it.forEach { classify ->
+                    fragments.add(ProjectChildFragment.newInstance(classify.id, false))
+                }
                 magic_indicator.navigator.notifyDataSetChanged()
                 view_pager.adapter?.notifyDataSetChanged()
                 view_pager.offscreenPageLimit = fragments.size
