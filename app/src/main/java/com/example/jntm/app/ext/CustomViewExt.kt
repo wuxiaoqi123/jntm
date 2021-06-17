@@ -32,6 +32,7 @@ import com.example.jntm.app.weight.recyclerview.DefineLoadMoreView
 import com.example.jntm.app.weight.viewpager.ScaleTransitionPagerTitleView
 import com.example.jntm.ui.fragment.home.HomeFragment
 import com.example.jntm.ui.fragment.project.ProjectFragment
+import com.example.jntm.ui.fragment.tree.TreeArrFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
@@ -82,8 +83,9 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
 
         override fun createFragment(position: Int): Fragment {
             when (position) {
-                0, 2, 3, 4 -> return HomeFragment()
+                0, 3, 4 -> return HomeFragment()
                 1 -> return ProjectFragment()
+                2 -> return TreeArrFragment()
                 else -> return HomeFragment()
             }
         }
