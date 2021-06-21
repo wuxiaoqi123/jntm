@@ -24,7 +24,7 @@ class TreeArrFragment : BaseFragment<TreeViewModel, FragmentViewpagerBinding>() 
 
     init {
         fragments.add(PlazaFragment())
-        fragments.add(PlazaFragment())
+        fragments.add(AskFragment())
         fragments.add(PlazaFragment())
         fragments.add(PlazaFragment())
     }
