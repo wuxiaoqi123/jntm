@@ -1,7 +1,6 @@
 package com.example.jntm.ui.fragment.tree
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.jetpackmvvm.ext.nav
 import com.example.jetpackmvvm.ext.navigateAction
@@ -25,8 +24,8 @@ class TreeArrFragment : BaseFragment<TreeViewModel, FragmentViewpagerBinding>() 
     init {
         fragments.add(PlazaFragment())
         fragments.add(AskFragment())
-        fragments.add(PlazaFragment())
-        fragments.add(PlazaFragment())
+        fragments.add(SystemFragment())
+        fragments.add(NavigationFragment())
     }
 
     override fun layoutId() = R.layout.fragment_viewpager
