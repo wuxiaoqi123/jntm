@@ -48,26 +48,25 @@ class SystemFragment : BaseFragment<TreeViewModel, IncludeListBinding>() {
             //触发刷新监听时请求数据
             requestTreeViewModel.getSystemData()
         }
-        //TODO
-    //        systemAdapter.run {
-//            setOnItemClickListener { _, view, position ->
-//                if (systemAdapter.data[position].children.isNotEmpty()) {
-//                    nav().navigateAction(R.id.action_mainfragment_to_systemArrFragment,
-//                        Bundle().apply {
-//                            putParcelable("data", systemAdapter.data[position])
-//                        }
-//                    )
-//                }
-//            }
-//            setChildClick { item: SystemResponse, view, position ->
-//                nav().navigateAction(R.id.action_mainfragment_to_systemArrFragment,
-//                    Bundle().apply {
-//                        putParcelable("data", item)
-//                        putInt("index", position)
-//                    }
-//                )
-//            }
-//        }
+        systemAdapter.run {
+            setOnItemClickListener { _, view, position ->
+                if (systemAdapter.data[position].children.isNotEmpty()) {
+                    nav().navigateAction(R.id.action_mainfragment_to_systemArrFragment,
+                        Bundle().apply {
+                            putParcelable("data", systemAdapter.data[position])
+                        }
+                    )
+                }
+            }
+            setChildClick { item: SystemResponse, view, position ->
+                nav().navigateAction(R.id.action_mainfragment_to_systemArrFragment,
+                    Bundle().apply {
+                        putParcelable("data", item)
+                        putInt("index", position)
+                    }
+                )
+            }
+        }
     }
 
     override fun lazyLoadData() {

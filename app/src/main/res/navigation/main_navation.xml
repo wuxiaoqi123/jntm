@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navation"
     app:startDestination="@+id/mainfragment">
 
@@ -12,6 +13,14 @@
         <action
             android:id="@+id/action_mainfragment_to_lookInfoFragment"
             app:destination="@id/lookInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_mainfragment_to_systemArrFragment"
+            app:destination="@id/systemArrFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -54,6 +63,20 @@
         android:id="@+id/lookInfoFragment"
         android:name="com.example.jntm.ui.fragment.lookinfo.LookInfoFragment"
         android:label="LookInfoFragment" />
+
+    <fragment
+        android:id="@+id/systemArrFragment"
+        android:name="com.example.jntm.ui.fragment.tree.SystemArrFragment"
+        tools:layout="SystemArrFragment">
+
+        <action
+            android:id="@+id/action_systemArrFragment_to_lookInfoFragment"
+            app:destination="@id/lookInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <action
         android:id="@+id/action_to_loginFragment"
